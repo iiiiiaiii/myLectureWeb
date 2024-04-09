@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <h1>HELLO SHOP</h1>
+        <p>
+
+        <form th:action="@{/logout}" method="post">
+            <button class="w-100 btn btn-dark btn-lg" type="submit">
+                로그아웃
+            </button>
+        </form>
+        </p>
+        <p class="lead">목록</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/lecturelist">전체 강의</a>
+            <a class="btn btn-lg btn-dark" th:href="@{/{lecturerId}/lecturerHome/lecturelist(lecturerId=${lecturerId})}">내 강의 목록</a>
+
+            <a class="btn btn-lg btn-dark" th:href="@{/{lecturerId}/lecturerHome/booklist(lecturerId=${lecturerId})}">내 책 목록</a>
+        </p>
+        <p class="lead">상품 추가</p>
+        <p>
+            <a class="btn btn-lg btn-info" th:href="@{/{lecturerId}/items/newLecture(lecturerId=${lecturerId})}">강의 추가</a>
+            <a class="btn btn-lg btn-info" th:href="@{/{lecturerId}/items/newBook(lecturerId=${lecturerId})}">책 추가</a>
+        </p>
+        <p class="lead">상품 수정</p>
+        <p>
+            <a class="btn btn-lg btn-info" th:href="@{/{lecturerId}/updateLecture(lecturerId=${lecturerId})}">강의 수정</a>
+            <a class="btn btn-lg btn-info" th:href="@{/{lecturerId}/updateBook(lecturerId=${lecturerId})}">책 수정</a>
+        </p>
+        <p class="lead">상품 삭제</p>
+        <p>
+            <a class="btn btn-lg btn-info" th:href="@{/{lecturerId}/cancelLecture(lecturerId=${lecturerId})}">강의 삭제</a>
+            <a class="btn btn-lg btn-info" th:href="@{/{lecturerId}/cancelBook(lecturerId=${lecturerId})}">책 삭제</a>
+        </p>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>

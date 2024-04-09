@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <form role="form" th:action="@{'/'+${studentId}+'/studentHome/cancelOrderBook'}" method="post">
+        <div class="form-group">
+            <label for="book">상품명</label>
+            <select name="bookId" id="book" class="form-control">
+                <option value="">상품선택</option>
+                <option th:each="book : ${allOrderBook}"
+                        th:value="${book.orderId}"
+                        th:text="${book.bookName}" />
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="count">주문수량</label>
+            <input type="number" name="count" class="form-control" id="count" placeholder="주문 수량을 입력하세요">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" th:action="@{'/'+${studentId}+'/studentHome/orderStatus'}" method="get">
+        <div class="form-group">
+            <select name="orderStatus" class="form-control">
+                <option value="">주문상태</option>
+                <option th:each="status : ${T(com.example.demo.domain.order.OrderStatus).values()}"
+                        th:value="${status}"
+                        th:text="${status}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">주문 상태 조회</button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</div> <!-- /container -->
+
+</body>
+<script>
+    function cancel(id) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/orders/" + id + "/cancel");
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>책</th>
+                <th>저자</th>
+                <th>가격</th>
+                <th>재고</th>
+                <th>강의</th>
+                <th>강사</th>
+                <th>isbn</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${allBook}">
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.price}"></td>
+                <td th:text="${book.stock}"></td>
+                <td th:text="${book.lecture}"></td>
+                <td th:text="${book.lecturer}"></td>
+                <td th:text="${book.isbn}"></td>
+
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>

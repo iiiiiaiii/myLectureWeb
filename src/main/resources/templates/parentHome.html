@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <h1>HELLO SHOP</h1>
+        <p class="lead">회원 메뉴</p>
+        <p>
+
+        <form th:action="@{/logout}" method="post">
+            <button class="w-100 btn btn-dark btn-lg" type="submit">
+                로그아웃
+            </button>
+        </form>
+        </p>
+        <p class="lead">강의</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/lecturelist">전체 강의</a>
+        </p>
+        <p>
+            <a class="btn btn-lg btn-info" th:href="@{/{parentId}/parentHome/lecturelist(parentId=${parentId})}">자녀 강의 목록</a>
+        </p>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>

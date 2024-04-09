@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <p>책 삭제</p>
+
+    <form role="form" th:action="@{'/'+${lecturerId}+'/cancelBook'}" method="post">
+        <div class="form-group">
+            <label for="book">강의명</label>
+            <select name="bookId" id="book" class="form-control">
+                <option value="">책선택</option>
+                <option th:each="book : ${allBook}"
+                        th:value="${book.id}"
+                        th:text="${book.name}" />
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>
