@@ -110,10 +110,14 @@ public class OrderRepository {
     public void cancelOrderLecture(OrderBase orderBase, OrderLecture orderLecture) {
         em.remove(orderLecture);
         em.remove(orderBase);
+        em.flush();
     }
     public void cancelOrderBook(OrderBase orderBase, List<OrderBook> orderBook) {
-        em.remove(orderBook);
+        for (OrderBook book : orderBook) {
+            em.remove(book);
+        }
         em.remove(orderBase);
+        em.flush();
     }
 
 }

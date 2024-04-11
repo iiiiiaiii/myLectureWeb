@@ -85,8 +85,10 @@ public class OrderService {
     @Transactional
     public void cancelOrderBook(Long orderId) {
         //주문 엔티티 조회
+        System.out.println("orderId = " + orderId);
         OrderBase order = orderRepository.findOne(orderId);
         List<Book> studentBook = order.getStudent().getBooks();
+        System.out.println("studentBook.get(0).getId() = " + studentBook.get(0).getId());
         //정보수정
         rollback(order);
         List<OrderBook> orderBooks = order.getOrderBooks();

@@ -10,12 +10,16 @@
         <div class="form-group">
             <label for="lecture">강의명</label>
             <select name="lectureId" id="lecture" class="form-control">
-                <option value="">강의선택</option>
+                <option value="0">강의선택</option>
                 <option th:each="lecture : ${allOrderLecture}"
                         th:value="${lecture.orderId}"
                         th:text="${lecture.LectureName}" />
             </select>
         </div>
+        <div th:if="${selectError}" class="alert alert-danger">
+            <span th:text="${selectError}"></span>
+        </div>
+
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

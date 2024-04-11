@@ -15,7 +15,7 @@
         <div class="form-group">
             <label for="book">상품명</label>
             <select name="bookId" id="book" class="form-control">
-                <option value="">상품선택</option>
+                <option value="0">상품선택</option>
                 <option th:each="book : ${allBooks}"
                         th:value="${book.id}"
                         th:text="${book.name}" />
@@ -24,7 +24,12 @@
 
         <div class="form-group">
             <label for="count">주문수량</label>
-            <input type="number" name="count" class="form-control" id="count" placeholder="주문 수량을 입력하세요">
+            <input type="number" name="count" class="form-control" id="count" placeholder="주문 수량을 입력하세요"
+                   th:value="0" />
+        </div>
+
+        <div th:if="${inputError}" class="alert alert-danger">
+            <span th:text="${inputError}"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

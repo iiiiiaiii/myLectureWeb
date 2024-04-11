@@ -14,6 +14,7 @@ import HelloShop.shop.project_1.service.ItemService;
 import HelloShop.shop.project_1.service.MemberService;
 import HelloShop.shop.project_1.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,9 +64,15 @@ public class OrderController {
     @PostMapping("/{studentId}/orderBook")
     public String orderListBook(Model model,
                                 @PathVariable("studentId") String studentId,
-                                @RequestParam("bookId") Long bookName,
+                                @RequestParam("bookId") Long bookId,
                                 @RequestParam("count") int count) {
-        orderService.orderBase(studentId, bookName, count, Book.class);
+        if (bookId == 0 || count == 0) {
+            model.addAttribute("inputError", "주문을 확인해주세요");
+            List<BookDTO> allBooks = itemService.findAllBookDto();
+            model.addAttribute("allBooks", allBooks);
+            return "order/orderBookForm";
+        }
+        orderService.orderBase(studentId, bookId, count, Book.class);
         List<OrderBookQueryDto> bookDto = orderService.findBookOne(studentId);
         model.addAttribute("bookDto", bookDto);
         return "order/orderList2";
@@ -75,8 +82,8 @@ public class OrderController {
     public String orderListLecture(@PathVariable("studentId") String studentId,
                                    @RequestParam("lectureId") Long lectureId,
                                    Model model){
-        if (itemService.duplicateCheck(studentId, lectureId)) {
-            model.addAttribute("duplicateError", "이미 신청한 강의입니다");
+        if (itemService.duplicateCheck(studentId, lectureId)||lectureId==0) {
+            model.addAttribute("duplicateError", "이미 신청한 강의거나 강의를 선택해주세요");
             List<LectureDTO> allLectures = itemService.findAllLectureDto();
             model.addAttribute("allLectures", allLectures);
             return "order/orderLectureForm";
@@ -127,7 +134,14 @@ public class OrderController {
     }
     @PostMapping("{studentId}/studentHome/cancelOrderLecture")
     public String cancelLecture2(@PathVariable("studentId") String studentId,
-                             @RequestParam("lectureId")Long lectureId) {
+                             @RequestParam("lectureId")Long lectureId,
+                                 Model model) {
+        if (lectureId == 0) {
+            List<OrderLectureQueryDto> allOrderLecture = orderService.findLectureOne(studentId);
+            model.addAttribute("allOrderLecture", allOrderLecture);
+            model.addAttribute("selectError", "상품을 확인해주세요");
+            return "order/cancelLectureOrder";
+        }
         orderService.cancelOrderLecture(lectureId);
         return "redirect:/{studentId}/studentHome/lecturelist";
     }
@@ -141,7 +155,14 @@ public class OrderController {
     }
     @PostMapping("{studentId}/studentHome/cancelOrderBook")
     public String cancelBook2(@PathVariable("studentId") String studentId,
-                              @RequestParam("bookId")Long bookId) {
+                              @RequestParam("bookId")Long bookId,
+                              Model model) {
+        if (bookId == 0) {
+            List<OrderBookQueryDto> allOrderBook = orderService.findBookOne(studentId);
+            model.addAttribute("allOrderBook", allOrderBook);
+            model.addAttribute("selectError", "상품을 확인해주세요");
+            return "order/cancelBookOrder";
+        }
         orderService.cancelOrderBook(bookId);
         return "redirect:/{studentId}/studentHome/booklist";
     }

@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="lecture">강의명</label>
             <select name="lectureId" id="lecture" class="form-control">
-                <option value="">강의선택</option>
+                <option value="0">강의선택</option>
                 <option th:each="lecture : ${allLectures}"
                         th:value="${lecture.id}"
                         th:text="${lecture.name}" />
