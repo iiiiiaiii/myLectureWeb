@@ -68,7 +68,7 @@ public class ItemService {
     }
 
     public List<?> findOneItems(Class<? extends Member> memberClass,Class<? extends Item> itemClass,String id) {
-        return itemRepository.findByIdLectures(memberClass, itemClass,id);
+        return itemRepository.findByIdItems(memberClass, itemClass,id);
     }
 
     public List<LectureDTO> findOneLectureDto(Class<? extends Member> entityClass, String id) {
@@ -92,8 +92,7 @@ public class ItemService {
         return book;
     }
 
-    public boolean duplicateCheck(String studentId, String bookId) {
-        Lecture findLecture = findByName(Lecture.class, bookId);
-        return itemRepository.checkDuplicate(studentId, findLecture.getId());
+    public boolean duplicateCheck(String studentId, Long bookId) {
+        return itemRepository.checkDuplicate(studentId, bookId);
     }
 }

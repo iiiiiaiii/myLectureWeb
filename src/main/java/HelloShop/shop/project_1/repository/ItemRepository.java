@@ -40,7 +40,7 @@ public class ItemRepository {
         }
     }
 
-    public List<?> findByIdLectures(Class<? extends Member> memberClass, Class<? extends Item> itemClass , String id) {
+    public List<?> findByIdItems(Class<? extends Member> memberClass, Class<? extends Item> itemClass , String id) {
         String itemClassSimpleName = itemClass.getSimpleName();
         try {
             return em.createQuery("select l from " + memberClass.getSimpleName() + " m" +
@@ -48,6 +48,17 @@ public class ItemRepository {
                             " where m.loginId = :loginId", Lecture.class)
                     .setParameter("loginId", id)
                     .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    public Item findByLongItems(Class<? extends Item> itemClass,Long id) {
+        try {
+            return em.createQuery("select m from " + itemClass.getSimpleName() + " m" +
+                            " where m.id = :id", Lecture.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
         } catch (NoResultException ex) {
             return null;
         }

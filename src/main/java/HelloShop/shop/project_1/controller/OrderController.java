@@ -45,7 +45,7 @@ public class OrderController {
 
     @PostMapping("/{studentId}/studentHome/orderBook")
     public String orderBook(@PathVariable("studentId") String studentId,
-                            @RequestParam("bookId") String bookName,
+                            @RequestParam("bookId") Long bookName,
                             @RequestParam("count") int count) {
         orderService.orderBase(studentId, bookName, count, Book.class);
         return "redirect:/" + studentId + "/orders";
@@ -63,9 +63,9 @@ public class OrderController {
     @PostMapping("/{studentId}/orderBook")
     public String orderListBook(Model model,
                                 @PathVariable("studentId") String studentId,
-                                @RequestParam("bookId") String bookId,
+                                @RequestParam("bookId") Long bookName,
                                 @RequestParam("count") int count) {
-        orderService.orderBase(studentId, bookId, count, Book.class);
+        orderService.orderBase(studentId, bookName, count, Book.class);
         List<OrderBookQueryDto> bookDto = orderService.findBookOne(studentId);
         model.addAttribute("bookDto", bookDto);
         return "order/orderList2";
@@ -73,7 +73,7 @@ public class OrderController {
 
     @PostMapping("/{studentId}/orderLecture")
     public String orderListLecture(@PathVariable("studentId") String studentId,
-                                   @RequestParam("lectureId") String lectureId,
+                                   @RequestParam("lectureId") Long lectureId,
                                    Model model){
         if (itemService.duplicateCheck(studentId, lectureId)) {
             model.addAttribute("duplicateError", "이미 신청한 강의입니다");

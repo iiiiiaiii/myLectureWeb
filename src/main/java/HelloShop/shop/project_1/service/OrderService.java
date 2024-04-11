@@ -38,10 +38,10 @@ public class OrderService {
     private final OrderQueryRepository orderQueryRepository;
 
     @Transactional
-    public Long orderBase(String memberId, String itemName, int count, Class<? extends Item> entityClass) {
+    public Long orderBase(String memberId, Long id, int count, Class<? extends Item> entityClass) {
         Optional<Student> byLoginId = memberRepository.findByLoginId(Student.class, memberId);
         Student findMember = byLoginId.get();
-        Item findItem = itemRepository.findByName(entityClass, itemName);
+        Item findItem = itemRepository.findByLongItems(entityClass,id);
         if (findItem.getClass() == Lecture.class) {
             Lecture findLecture = (Lecture) findItem;
             findMember.addLecture(findLecture);
