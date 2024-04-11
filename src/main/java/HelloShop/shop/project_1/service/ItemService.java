@@ -91,4 +91,9 @@ public class ItemService {
         book.setStockQuantity(param.getStockQuantity());
         return book;
     }
+
+    public boolean duplicateCheck(String studentId, String bookId) {
+        Lecture findLecture = findByName(Lecture.class, bookId);
+        return itemRepository.checkDuplicate(studentId, findLecture.getId());
+    }
 }

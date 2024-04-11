@@ -1,5 +1,6 @@
 package HelloShop.shop.project_1.repository.order.query;
 
+import HelloShop.shop.project_1.domain.order.OrderBase;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,19 @@ public class OrderQueryRepository {
     }
     public List<OrderBookQueryDto> findBookDtoByStudentId(String studentId) {
         return findOrdersBook(studentId);
+    }
+
+    public List<OrderItemQueryDto> findOrders(List<Long> ids) {
+        return findOrderItems(ids);
+    }
+
+    private List<OrderItemQueryDto> findOrderItems(List<Long> orderId) {
+        return em.createQuery(
+                        "select new HelloShop.shop.project_1.repository.order.query.OrderItemQueryDto(ob.id, ob.price)" +
+                                " from OrderBase ob" +
+                                " where ob.id in :orderId", OrderItemQueryDto.class)
+                .setParameter("orderId", orderId)
+                .getResultList();
     }
 
     private Map<Long, List<OrderBookDTO>> findOrderBooksMap(List<Long> orderBookIds) {

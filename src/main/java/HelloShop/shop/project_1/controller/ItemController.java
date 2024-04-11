@@ -189,16 +189,7 @@ public class ItemController {
         model.addAttribute("allBook", allBook);
         return "items/bookList";
     }
-
-    @GetMapping("/{studentId}/studentHome/orderlist")
-    public String myOrder(Model model,
-                          @PathVariable("studentId") String Id) {
-        List<BookDTO> allBook = itemService.findOneBookDto(Student.class, Id);
-        model.addAttribute("allBook", allBook);
-        return "items/bookList";
-    }
-
-
+    
     //parent
     @GetMapping("/{parentId}/parentHome/lecturelist")
     public String studentLecture(@PathVariable("parentId") String parentId,

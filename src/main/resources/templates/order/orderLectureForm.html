@@ -6,6 +6,7 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
+
     <form role="form" th:action="@{'/'+${studentId}+'/orderLecture'}" method="post">
         <div class="form-group">
             <label for="lecture">강의명</label>
@@ -15,6 +16,11 @@
                         th:value="${lecture.id}"
                         th:text="${lecture.name}" />
             </select>
+        </div>
+
+        <!-- 중복 오류 메시지 표시 -->
+        <div th:if="${duplicateError}" class="alert alert-danger">
+            <span th:text="${duplicateError}"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

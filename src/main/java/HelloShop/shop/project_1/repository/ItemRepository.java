@@ -56,4 +56,17 @@ public class ItemRepository {
         em.remove(item);
     }
 
+    public boolean checkDuplicate(String studentId, Long lectureId) {
+        try {
+            Long result = em.createQuery("select l.id from Student s" +
+                            " join s.lectures l" +
+                            " where s.id = :studentId AND l.id = :lectureId", Long.class)
+                    .setParameter("studentId", studentId)
+                    .setParameter("lectureId", lectureId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return false;
+        }
+        return true;
+    }
 }

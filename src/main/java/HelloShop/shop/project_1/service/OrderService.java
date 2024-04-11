@@ -17,6 +17,7 @@ import HelloShop.shop.project_1.repository.MemberRepository;
 import HelloShop.shop.project_1.repository.OrderRepository;
 import HelloShop.shop.project_1.repository.OrderSearch;
 import HelloShop.shop.project_1.repository.order.query.OrderBookQueryDto;
+import HelloShop.shop.project_1.repository.order.query.OrderItemQueryDto;
 import HelloShop.shop.project_1.repository.order.query.OrderLectureQueryDto;
 import HelloShop.shop.project_1.repository.order.query.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
@@ -99,6 +100,7 @@ public class OrderService {
 
 
 
+
     public List<OrderLectureQueryDto> findLectureDto() {
         return orderQueryRepository.findAllByDto_optimization_Lecture();
     }
@@ -114,6 +116,10 @@ public class OrderService {
 
     public List<OrderLectureQueryDto> findLectureOne(String id) {
         return orderQueryRepository.findLectureByStudentId(id);
+    }
+
+    public List<OrderItemQueryDto> findOrders(List<Long> ids) {
+        return orderQueryRepository.findOrders(ids);
     }
 
     private static void rollback(OrderBase order) {

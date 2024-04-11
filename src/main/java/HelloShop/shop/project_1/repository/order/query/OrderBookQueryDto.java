@@ -13,6 +13,8 @@ import java.util.List;
 
 @EqualsAndHashCode(of = "orderId")
 public class OrderBookQueryDto {
+
+
     private Long orderId;
     private String bookName;
     private int price;

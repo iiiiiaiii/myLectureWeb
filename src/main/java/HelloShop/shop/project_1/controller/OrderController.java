@@ -8,6 +8,7 @@ import HelloShop.shop.project_1.domain.order.OrderStatus;
 import HelloShop.shop.project_1.dto.BookDTO;
 import HelloShop.shop.project_1.dto.LectureDTO;
 import HelloShop.shop.project_1.repository.order.query.OrderBookQueryDto;
+import HelloShop.shop.project_1.repository.order.query.OrderItemQueryDto;
 import HelloShop.shop.project_1.repository.order.query.OrderLectureQueryDto;
 import HelloShop.shop.project_1.service.ItemService;
 import HelloShop.shop.project_1.service.MemberService;
@@ -15,11 +16,13 @@ import HelloShop.shop.project_1.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,7 +65,6 @@ public class OrderController {
                                 @PathVariable("studentId") String studentId,
                                 @RequestParam("bookId") String bookId,
                                 @RequestParam("count") int count) {
-
         orderService.orderBase(studentId, bookId, count, Book.class);
         List<OrderBookQueryDto> bookDto = orderService.findBookOne(studentId);
         model.addAttribute("bookDto", bookDto);
@@ -70,9 +72,15 @@ public class OrderController {
     }
 
     @PostMapping("/{studentId}/orderLecture")
-    public String orderListLecture(Model model,
-                                   @PathVariable("studentId") String studentId,
-                                   @RequestParam("lectureId") String lectureId) {
+    public String orderListLecture(@PathVariable("studentId") String studentId,
+                                   @RequestParam("lectureId") String lectureId,
+                                   Model model){
+        if (itemService.duplicateCheck(studentId, lectureId)) {
+            model.addAttribute("duplicateError", "이미 신청한 강의입니다");
+            List<LectureDTO> allLectures = itemService.findAllLectureDto();
+            model.addAttribute("allLectures", allLectures);
+            return "order/orderLectureForm";
+        }
 
         orderService.orderBase(studentId, lectureId, 1, Lecture.class);
         List<OrderLectureQueryDto> lectureDto = orderService.findLectureOne(studentId);
@@ -80,15 +88,6 @@ public class OrderController {
         return "order/orderList";
     }
 
-//    @GetMapping("/{studentId}/studentHome/orderStatus")
-//    public String orderStatus(@PathVariable("studentId") String studentId,
-//                              Model model) {
-//        Optional<Student> id = memberService.findId(Student.class, studentId);
-//        Student student = id.get();
-//        List<OrderBase> orderBases = student.getOrderBases();
-//        model.addAttribute("orderBases", orderBases);
-//        return "order/orderStatus";
-//    }
 
     @GetMapping("/{studentId}/studentHome/orderStatus")
     public String orderStatus(@PathVariable("studentId") String studentId,
@@ -108,10 +107,13 @@ public class OrderController {
                     .collect(Collectors.toList());
         } else {
             // 주문 상태를 지정하지 않은 경우 모든 주문 목록 가져오기
-            orderBases = student.getOrderBases();
+            orderBases = new ArrayList<>(student.getOrderBases());
         }
-
-        model.addAttribute("orderBases", orderBases);
+        List<Long> ids= orderBases.stream()
+                .map(OrderBase::getId)
+                .toList();
+        List<OrderItemQueryDto> orderBaseDTO = orderService.findOrders(ids);
+        model.addAttribute("orderBases", orderBaseDTO);
         return "order/orderStatus";
     }
 

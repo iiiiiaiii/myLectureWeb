@@ -1,5 +1,6 @@
 package HelloShop.shop.project_1.repository;
 
+import HelloShop.shop.project_1.domain.item.Lecture;
 import HelloShop.shop.project_1.domain.member.Member;
 import HelloShop.shop.project_1.domain.order.OrderBase;
 import HelloShop.shop.project_1.domain.order.OrderBook;
@@ -114,4 +115,5 @@ public class OrderRepository {
         em.remove(orderBook);
         em.remove(orderBase);
     }
+
 }
