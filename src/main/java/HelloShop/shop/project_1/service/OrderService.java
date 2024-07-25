@@ -45,10 +45,15 @@ public class OrderService {
         if (findItem.getClass() == Lecture.class) {
             Lecture findLecture = (Lecture) findItem;
             findMember.addLecture(findLecture);
+            System.out.println("findMember = " + findMember.getLectures().get(0).getName());
             int price = discountSet(findLecture.getPrice(), findMember);
+            System.out.println("price = " + price);
             OrderLecture orderLecture = OrderLecture.createOrderLecture(findLecture, price);
+            System.out.println("orderLecture = " + orderLecture);
             OrderBase orderBase = OrderBase.createLecture(findMember, orderLecture);
+            System.out.println("orderBase2 = " + orderBase);
             orderRepository.save(orderBase);
+            System.out.println("orderBase = " + orderBase);
             return orderBase.getId();
         }
         Book book = (Book) findItem;

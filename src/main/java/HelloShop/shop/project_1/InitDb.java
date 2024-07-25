@@ -33,9 +33,14 @@ public class InitDb {
         public void dbInit1() {
             Student student = createStudent("1", "1", 1, "1", "1", "1", "1");
             Parent parent = createParent("1", "1", 1, "1", student);
-            Lecturer lecturer = createLecturer("1", "1", 1, "1", myClass.국어);
-            Lecture lecture = createLecture(1, "1", lecturer);
-            Book book = createBook(1, lecture, "1", 1, "1", "1");
+            Lecturer lecturer = createLecturer("강호동", "1", 1, "1", myClass.국어);
+            Lecture lecture = createLecture(100000, "mySQL", lecturer);
+            Lecture lecture2 = createLecture(120000, "SpringBoot", lecturer);
+            Lecture lecture3 = createLecture(130000, "Java", lecturer);
+
+            Book book = createBook(50000, lecture3, "자바책", 10, "유재석", "120");
+            Book book2 = createBook(60000, lecture2, "스프링책", 10, "박명수", "121");
+            Book book3 = createBook(70000, lecture, "데이터베이스책", 10, "이승기", "122");
 
         }
 

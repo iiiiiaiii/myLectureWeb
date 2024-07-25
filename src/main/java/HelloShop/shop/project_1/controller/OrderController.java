@@ -82,6 +82,7 @@ public class OrderController {
     public String orderListLecture(@PathVariable("studentId") String studentId,
                                    @RequestParam("lectureId") Long lectureId,
                                    Model model){
+        System.out.println("studentId = " + studentId);
         if (itemService.duplicateCheck(studentId, lectureId)||lectureId==0) {
             model.addAttribute("duplicateError", "이미 신청한 강의거나 강의를 선택해주세요");
             List<LectureDTO> allLectures = itemService.findAllLectureDto();

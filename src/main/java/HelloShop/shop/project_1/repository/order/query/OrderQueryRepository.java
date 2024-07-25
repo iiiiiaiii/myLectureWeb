@@ -101,7 +101,7 @@ public class OrderQueryRepository {
                         "select new HelloShop.shop.project_1.repository.order.query.OrderBookQueryDto(ob.id, ob.book.name, ob.price, ob.count , ob.orderBase.orderDate, ob.orderBase.status , d.address, d.status)" +
                                 " from OrderBook ob" +
                                 " join ob.orderBase.delivery d" +
-                                " where ob.orderBase.student.id = : studentId", OrderBookQueryDto.class
+                                " where ob.orderBase.student.loginId = : studentId", OrderBookQueryDto.class
                 )
                 .setParameter("studentId", studentId)
                 .getResultList();
@@ -120,7 +120,7 @@ public class OrderQueryRepository {
                                 " from OrderBase o" +
                                 " join o.orderLecture ol" +
                                 " join ol.lecture l" +
-                                " where o.student.id = : studentId", OrderLectureQueryDto.class
+                                " where o.student.loginId = : studentId", OrderLectureQueryDto.class
                 )
                 .setParameter("studentId", studentId)
                 .getResultList();

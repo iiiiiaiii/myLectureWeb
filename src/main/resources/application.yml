@@ -3,9 +3,10 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    url: jdbc:mysql://localhost/db_base?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    #url: jdbc:mysql://localhost/db_base?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.45.157:3306/db_base?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: 1234
+    password: 1234abAB!
   jpa:
     hibernate:
       ddl-auto: create

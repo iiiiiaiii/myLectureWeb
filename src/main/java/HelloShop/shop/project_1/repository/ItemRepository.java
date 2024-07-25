@@ -40,6 +40,7 @@ public class ItemRepository {
         }
     }
 
+
     public List<?> findByIdItems(Class<? extends Member> memberClass, Class<? extends Item> itemClass , String id) {
         String itemClassSimpleName = itemClass.getSimpleName();
         try {
@@ -69,12 +70,15 @@ public class ItemRepository {
 
     public boolean checkDuplicate(String studentId, Long lectureId) {
         try {
-            Long result = em.createQuery("select l.id from Student s" +
+            System.out.println("lectureId = " + lectureId);
+            Long singleResult = em.createQuery("select l.id " +
+                            "from Student s" +
                             " join s.lectures l" +
-                            " where s.id = :studentId AND l.id = :lectureId", Long.class)
+                            " where s.loginId = :studentId AND l.id = :lectureId", Long.class)
                     .setParameter("studentId", studentId)
                     .setParameter("lectureId", lectureId)
                     .getSingleResult();
+            System.out.println("singleResult = " + singleResult);
         } catch (NoResultException e) {
             return false;
         }
